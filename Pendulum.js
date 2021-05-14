@@ -24,6 +24,7 @@ class Pendulum {
         strokeWeight(40);
         line(constantPosition.x, constantPosition.y, position.x, position.y);
 
+        // Special thanks to: Talha the Intern Bender 
         fill(255, 100, 100);
         strokeWeight(7);
         stroke(0);
@@ -33,6 +34,12 @@ class Pendulum {
     }
 
     update() {
+        if (this.theta > 180) {
+            this.theta -= 360;
+        } else if (this.theta < -180) {
+            this.theta += 360;
+        }
+
         this.applyPID();
         this.angularAcceleration = sin(this.theta)*this.gravity/this.realLength - this.friction*this.angularVelocity/(this.mass*this.realLength) + this.force + this.pidForce;
         this.angularVelocity += this.angularAcceleration;
